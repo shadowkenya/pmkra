@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SERVICE CENTER </title>
+<link rel="icon" type="image" href="img/pm.jpg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow: hidden; /* Hide scrollbars if content is larger than viewport */
+            display: flex; /* Use flexbox for centering */
+            align-items: center; /* Center vertically */
+            justify-content: center; /* Center horizontally */
+            min-height: 100vh; /* Full viewport height */
+            padding: 1rem; /* Add some padding around the content */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+            position: relative; /* Needed for z-index of content */
+
+            /* Background Image Styles */
+            background-image: url('img/pwm.jpg'); /* Placeholder image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-attachment: fixed; /* Keep background fixed while scrolling (if content overflows) */
+        }
+
+        .contact-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            width: 100%; /* Ensure it takes full width within its flex container */
+            max-width: 28rem; /* Adjusted max-width for better mobile fit, slightly smaller than 2xl */
+            padding: 2rem; /* Consistent padding */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+            z-index: 1; /* Ensure it's above the background */
+            position: relative; /* Needed for z-index to work */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .contact-card {
+                max-width: 36rem; /* Adjust max-width for larger screens if needed, original was 2xl (42rem) */
+                padding: 3rem;
+            }
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        .contact-icon {
+            color: #4f46e5; /* Indigo 600 */
+        }
+        .contact-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-decoration: none;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            gap: 0.75rem; /* Space between icon and text */
+        }
+        .contact-button:hover {
+            transform: translateY(-2px);
+        }
+        .bg-whatsapp { background-color: #25D366; }
+        .bg-whatsapp:hover { background-color: #1DA851; }
+        .bg-email { background-color: #EA4335; }
+        .bg-email:hover { background-color: #CC372C; }
+        .bg-phone { background-color: #4285F4; }
+        .bg-phone:hover { background-color: #356EDC; }
+        .bg-message { background-color: #F7931E; } /* Orange */
+        .bg-message:hover { background-color: #D17F1A; }
+
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            padding: 1rem; /* Ensure modal also has padding for small screens */
+            box-sizing: border-box;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            width: 100%; /* Take full width within its flex container */
+            max-width: 400px; /* Adjusted max-width for better fit on small screens */
+            transform: translateY(20px);
+            transition: transform 0.3s ease-in-out;
+            position: relative; /* For close button positioning */
+            box-sizing: border-box;
+        }
+        @media (min-width: 640px) { /* sm breakpoint */
+            .modal-content {
+                max-width: 500px; /* Revert to original max-width for larger screens */
+            }
+        }
+        .modal-overlay.open .modal-content {
+            transform: translateY(0);
+        }
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280; /* Gray 500 */
+        }
+        .modal-close-button:hover {
+            color: #1f2937; /* Gray 900 */
+        }
+        /* Input styling */
+        .modal-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db; /* Gray 300 */
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        .modal-textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* Blinking animation for the title */
+        .blinking-title {
+            animation: blinkColors 2s infinite alternate; /* 2s duration, infinite, alternates direction */
+        }
+
+        @keyframes blinkColors {
+            0% { color: #3b82f6; /* Blue */ }
+            50% { color: #22c55e; /* Green */ }
+            100% { color: #3b82f6; /* Blue */ }
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-card text-center">
+        <h1 class="text-4xl md:text-5xl font-extrabold blinking-title mb-6">FAST SERVICE</h1>
+        <p class="text-lg md:text-xl text-gray-600 mb-10">We're here to help! Choose your preferred way to contact us.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- WhatsApp -->
+            <a href="https://wa.me/254758361830" target="_blank" class="contact-button bg-whatsapp">
+                <i data-lucide="message-circle"></i>
+                <span>WhatsApp Us</span>
+            </a>
+
+            <!-- Email -->
+            <a href="mailto:shadowkenya254@gmail.com" class="contact-button bg-email">
+                <i data-lucide="mail"></i>
+                <span>Email Us</span>
+            </a>
+
+            <!-- Phone Call -->
+            <a href="tel:+254758361830" class="contact-button bg-phone">
+                <i data-lucide="phone"></i>
+                <span>Call Us</span>
+            </a>
+
+            <!-- Send Message (SMS) - Now opens a modal -->
+            <button id="openMessageModal" class="contact-button bg-message">
+                <i data-lucide="send"></i>
+                <span>Send Message</span>
+            </button>
+        </div>
+
+        <p class="text-md text-gray-500 mt-10">
+            Our team is available to assist you.
+        </p>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-button" id="closeMessageModal">&times;</button>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Send Message Now</h2>
+            <form id="messageForm">
+                <input type="text" id="fullName" placeholder="Full Names" class="modal-input" required>
+                <input type="email" id="email" placeholder="Email" class="modal-input" required>
+                <input type="tel" id="phoneNumber" placeholder="Phone Number" class="modal-input" required>
+                <textarea id="messageText" placeholder="Write message here..." class="modal-textarea" required></textarea>
+                <button type="submit" class="contact-button bg-blue-600 hover:bg-blue-700 w-full">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Function to show a custom message box
+        function showCustomMessageBox(message, backgroundColor = '#3b82f6', textColor = 'white') {
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: ${backgroundColor};
+                color: ${textColor};
+                padding: 20px;
+                border-radius: 8px;
+                z-index: 1000;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                font-family: 'Inter', sans-serif;
+                text-align: center;
+                transition: opacity 0.3s ease-in-out;
+                opacity: 0;
+            `;
+            messageBox.innerHTML = `<p>${message}</p>`;
+            document.body.appendChild(messageBox);
+
+            // Fade in
+            setTimeout(() => {
+                messageBox.style.opacity = '1';
+            }, 10);
+
+            // Fade out and remove
+            setTimeout(() => {
+                messageBox.style.opacity = '0';
+                messageBox.addEventListener('transitionend', () => messageBox.remove());
+            }, 3000); // Message disappears after 3 seconds
+        }
+
+        // Modal Logic
+        const messageModal = document.getElementById('messageModal');
+        const openMessageModalBtn = document.getElementById('openMessageModal');
+        const closeMessageModalBtn = document.getElementById('closeMessageModal');
+        const messageForm = document.getElementById('messageForm');
+
+        // Get input elements by their new IDs
+        const fullNameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('email');
+        const phoneNumberInput = document.getElementById('phoneNumber');
+        const messageTextInput = document.getElementById('messageText');
+
+        // Open modal
+        openMessageModalBtn.addEventListener('click', () => {
+            messageModal.classList.add('open');
+        });
+
+        // Close modal
+        closeMessageModalBtn.addEventListener('click', () => {
+            messageModal.classList.remove('open');
+            messageForm.reset(); // Clear form fields on close
+        });
+
+        // Close modal when clicking outside content
+        messageModal.addEventListener('click', (e) => {
+            if (e.target === messageModal) {
+                messageModal.classList.remove('open');
+                messageForm.reset(); // Clear form fields on close
+            }
+        });
+
+        // Handle form submission
+        messageForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent default form submission
+
+            // Show success message
+            showCustomMessageBox('Message sent successfully, check your inbox SMS', '#3b82f6', 'white'); // Blue background for success
+
+            // Close the modal after a short delay to allow message box to appear
+            setTimeout(() => {
+                messageModal.classList.remove('open');
+                messageForm.reset(); // Clear form fields after successful send
+            }, 500);
+        });
+    </script>
+</body>
+</html>
