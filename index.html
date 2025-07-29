@@ -3,129 +3,549 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KRA iTax Page - PM Solutions</title>
+    <title>PM KRA Sevices</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
             margin: 0;
-            background-color: #f0f2f5;
-            padding-top: 80px; /* Increased padding for taller header */
-            position: relative;
+            padding: 0;
+            background-color: #f3f4f6; /* Light gray background */
         }
 
-        .fixed-header {
+        /* Blinking animation for green and blue */
+        @keyframes blink-green-blue {
+            0%, 100% {
+                background-color: #10B981; /* Tailwind green-500 */
+                color: white;
+            }
+            50% {
+                background-color: #3B82F6; /* Tailwind blue-500 */
+                color: white;
+            }
+        }
+
+        /* Apply blinking animation to elements with .blink-button class */
+        .blink-button {
+            animation: blink-green-blue 1.5s infinite alternate;
+        }
+
+        /* Specific blinking for links */
+        @keyframes blink-link-blue-green {
+            0%, 100% {
+                color: #3B82F6; /* Tailwind blue-500 */
+            }
+            50% {
+                color: #10B981; /* Tailwind green-500 */
+            }
+        }
+
+        .blink-link {
+            animation: blink-link-blue-green 1.5s infinite alternate;
+        }
+
+        /* Modal overlay */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 75px; /* Increased header height to accommodate two lines */
-            background-color: #ADD8E6; /* Light Blue header color */
-            color: black;
-            display: flex;
-            flex-direction: column; /* Changed to column to stack elements vertically */
-            justify-content: center;
-            align-items: center;
-            padding: 5px 10px; /* Some padding on the sides and top/bottom */
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            box-sizing: border-box;
-            text-align: center; /* Center text within the header */
-        }
-
-        .header-top-line {
-            display: flex;
-            align-items: center;
-            justify-content: center; /* Center items horizontally */
-            width: 100%; /* Take full width for centering */
-        }
-
-        .heart-icon {
-            font-size: 28px;
-            margin-right: 5px;
-            animation: blink-color 1s infinite;
-            color: blue; /* Default color for heart */
-            flex-shrink: 0; /* Prevent from shrinking */
-        }
-
-        .blinking-text-main {
-            font-size: 24px;
-            font-weight: bold;
-            animation: blink-color 1s infinite;
-            display: inline-block; /* Allows inline positioning with icon */
-        }
-
-        .whatsapp-header-icon {
-            width: 35px; /* Slightly smaller icon to fit next to "NOW" */
-            height: 35px;
-            background-color: #25D366; /* WhatsApp green */
-            border-radius: 50%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+            z-index: 1000; /* Ensure it's on top */
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto; /* Enable scrolling for long content */
+            position: relative;
+        }
+
+        .modal-close-button {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
             cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            margin-left: 8px; /* Space between "NOW" and icon */
-            flex-shrink: 0; /* Prevent from shrinking */
-        }
-
-        .whatsapp-header-icon:hover {
-            transform: scale(1.1);
-        }
-
-        .whatsapp-header-icon img {
-            width: 70%;
-            height: 70%;
-            filter: invert(100%);
-        }
-
-        .blinking-text-sub {
-            font-size: 16px; /* Smaller font size for the second line */
-            font-weight: normal;
-            animation: blink-color 1s infinite;
-            margin-top: 5px; /* Space above this text */
-            white-space: nowrap; /* Prevent text from wrapping prematurely */
-        }
-
-        /* Keyframes for blinking blue and green */
-        @keyframes blink-color {
-            0%, 100% { color: blue; }
-            50% { color: green; }
-        }
-
-        .image-container {
-            border: 1px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 100%;
-            overflow: hidden;
-            margin-top: 20px;
-        }
-
-        .kra-image {
-            max-width: 100%;
-            height: auto;
-            display: block;
+            color: #4B5563; /* Tailwind gray-600 */
         }
     </style>
 </head>
-<body>
-    <header class="fixed-header">
-        <div class="header-top-line">
-            <span class="heart-icon">❤️</span>
-            <span class="blinking-text-main">REQUEST NOW</span>
-            <a href="https://wa.me/254758361830" class="whatsapp-header-icon" target="_blank" aria-label="Chat on WhatsApp">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Icon">
-            </a>
-        </div>
-        <span class="blinking-text-sub">By Peter Mayende</span>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-4 shadow-lg rounded-b-lg">
+        <nav class="container mx-auto flex flex-col sm:flex-row justify-between items-center">
+            <h1 class="text-3xl font-bold mb-4 sm:mb-0">PM KRA Services </h1>
+            <div class="flex space-x-4">
+                <a href="#" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105">Home</a>
+                <!-- Request Now button with blinking animation, linked to next_page.html -->
+                <a href="contact.html" class="px-6 py-3 font-semibold rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105 blink-button">Request Now</a>
+            </div>
+        </nav>
     </header>
 
-    <div class="image-container">
-        <img src="kra.JPG" alt="Kenya Revenue Authority iTax Online Service Area" class="kra-image">
+    <!-- Main Content Section -->
+    <main class="flex-grow container mx-auto p-6 bg-gray-100 rounded-lg shadow-inner my-8">
+        <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-10 leading-tight">Your Gateway to KRA Services</h2>
+        <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+            Welcome to the PM E-CITIZEN SERVICES KRA portal, your dedicated platform for accessing a comprehensive range of Kenya Revenue Authority services. We simplify tax compliance and related processes, ensuring a seamless and efficient experience for all taxpayers.
+        </p>
+
+        <!-- Services Grid - KRA Services -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- KRA Service 1: KRA PIN Registration -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">KRA PIN Registration</h3>
+                <p class="text-gray-700 mb-4 text-justify">Register for your Kenya Revenue Authority Personal Identification Number, a prerequisite for all tax-related activities and government services.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 2: KRA Tax Returns Filing (Individual) -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">KRA Tax Returns Filing (Individual)</h3>
+                <p class="text-gray-700 mb-4 text-justify">File your annual individual income tax returns (ITR) with KRA, ensuring compliance with tax laws and avoiding penalties.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 3: KRA Tax Returns Filing (Business) -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">KRA Tax Returns Filing (Business)</h3>
+                <p class="text-gray-700 mb-4 text-justify">File corporate income tax, VAT, and other business-related tax returns with KRA.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 4: KRA Tax Payment -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">KRA Tax Payment</h3>
+                <p class="text-gray-700 mb-4 text-justify">Make various tax payments to KRA, including income tax, VAT, PAYE, and other levies, securely and conveniently online.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 5: Tax Compliance Certificate (TCC) Application -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Tax Compliance Certificate (TCC)</h3>
+                <p class="text-gray-700 mb-4 text-justify">Apply for a Tax Compliance Certificate (TCC), verifying your adherence to tax obligations for various purposes like tenders, employment, or business registration.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 6: VAT Registration -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">VAT Registration</h3>
+                <p class="text-gray-700 mb-4 text-justify">Register for Value Added Tax (VAT) with KRA, enabling your business to comply with VAT regulations and collect/remit VAT.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 7: PAYE Registration -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">PAYE Registration</h3>
+                <p class="text-gray-700 mb-4 text-justify">Register for Pay As You Earn (PAYE) with KRA, essential for employers to manage employee tax deductions and remittances.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 8: Withholding Tax (WHT) Management -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Withholding Tax (WHT) Management</h3>
+                <p class="text-gray-700 mb-4 text-justify">Manage and remit withholding tax payments to KRA, ensuring compliance for various income sources like rent, dividends, and professional fees.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 9: Advance Tax Payment -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Advance Tax Payment</h3>
+                <p class="text-gray-700 mb-4 text-justify">Make advance tax payments for various income sources, helping you manage your tax obligations throughout the year.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 10: Objection and Appeals -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Objection and Appeals</h3>
+                <p class="text-gray-700 mb-4 text-justify">Submit objections or appeals against KRA tax assessments or decisions, ensuring fair resolution of disputes.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 11: Tax Exemption Application -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Tax Exemption Application</h3>
+                <p class="text-gray-700 mb-4 text-justify">Apply for various tax exemptions as provided by tax laws, reducing your tax burden based on eligibility.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 12: Change of PIN Details -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Change of PIN Details</h3>
+                <p class="text-gray-700 mb-4 text-justify">Update your KRA PIN details, such as address, contact information, or business particulars, to keep your records current.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 13: PIN De-registration -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">PIN De-registration</h3>
+                <p class="text-gray-700 mb-4 text-justify">Apply for de-registration of your KRA PIN when no longer required, such as for deceased persons or dissolved businesses.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 14: Tax Refunds Application -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Tax Refunds Application</h3>
+                <p class="text-gray-700 mb-4 text-justify">Apply for tax refunds for overpaid taxes, ensuring you receive back any excess amounts paid to KRA.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 15: Customs Cargo Clearance -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Customs Cargo Clearance</h3>
+                <p class="text-gray-700 mb-4 text-justify">Facilitate the clearance of imported or exported cargo through KRA customs, ensuring smooth trade operations.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 16: Excise Duty Management -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Excise Duty Management</h3>
+                <p class="text-gray-700 mb-4 text-justify">Manage and remit excise duty payments for specific goods and services, ensuring compliance with excise tax regulations.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 17: Stamp Duty Payment -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Stamp Duty Payment</h3>
+                <p class="text-gray-700 mb-4 text-justify">Pay stamp duty on various legal documents and transactions, such as property transfers and share transfers.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 18: Rental Income Tax -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Rental Income Tax</h3>
+                <p class="text-gray-700 mb-4 text-justify">File and pay rental income tax, ensuring compliance for landlords earning income from property rentals.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 19: Capital Gains Tax -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Capital Gains Tax</h3>
+                <p class="text-gray-700 mb-4 text-justify">Calculate and pay Capital Gains Tax on the transfer of property or other assets, as required by law.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 20: Presumptive Tax -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Presumptive Tax</h3>
+                <p class="text-gray-700 mb-4 text-justify">File and pay Presumptive Tax for small businesses and informal sector enterprises, simplifying tax compliance.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 21: Turnover Tax (TOT) -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Turnover Tax (TOT)</h3>
+                <p class="text-gray-700 mb-4 text-justify">File and pay Turnover Tax for eligible small and medium-sized enterprises, simplifying tax obligations.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 22: Taxpayer Registration Amendment -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer Registration Amendment</h3>
+                <p class="text-gray-700 mb-4 text-justify">Amend your taxpayer registration details, including changes in business activities, directorship, or other relevant information.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 23: Withholding VAT -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Withholding VAT</h3>
+                <p class="text-gray-700 mb-4 text-justify">Understand and manage the process of withholding VAT, ensuring compliance for designated withholding agents.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 24: Customs Declaration Amendment -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Customs Declaration Amendment</h3>
+                <p class="text-gray-700 mb-4 text-justify">Amend previously submitted customs declarations for goods, correcting errors or updating information as needed.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 25: Customs Import Duty Payment -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Customs Import Duty Payment</h3>
+                <p class="text-gray-700 mb-4 text-justify">Pay import duties and taxes on goods brought into the country, facilitating customs clearance.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 26: Customs Export Duty Payment -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Customs Export Duty Payment</h3>
+                <p class="text-gray-700 mb-4 text-justify">Pay export duties and taxes on goods leaving the country, ensuring compliance with export regulations.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 27: Customs Bond Management -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Customs Bond Management</h3>
+                <p class="text-gray-700 mb-4 text-justify">Manage and track customs bonds, which guarantee payment of duties and taxes on goods in transit or stored in bonded warehouses.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 28: Customs Refunds Application -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Customs Refunds Application</h3>
+                <p class="text-gray-700 mb-4 text-justify">Apply for refunds of overpaid customs duties or taxes, ensuring accurate financial reconciliation.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 29: Taxpayer Ledger Inquiry -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer Ledger Inquiry</h3>
+                <p class="text-gray-700 mb-4 text-justify">View your KRA taxpayer ledger to track your tax payments, returns, and outstanding balances.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 30: Taxpayer Profile Update -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer Profile Update</h3>
+                <p class="text-gray-700 mb-4 text-justify">Update your personal or business profile details registered with KRA, ensuring all information is accurate and current.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 31: Taxpayer Registration Status Check -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer Registration Status Check</h3>
+                <p class="text-gray-700 mb-4 text-justify">Check the status of your KRA PIN registration or other taxpayer registration applications.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 32: Taxpayer Obligation Inquiry -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer Obligation Inquiry</h3>
+                <p class="text-gray-700 mb-4 text-justify">Inquire about your specific tax obligations based on your KRA PIN and registered activities.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 33: Taxpayer PIN Validation -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer PIN Validation</h3>
+                <p class="text-gray-700 mb-4 text-justify">Validate the authenticity and status of a KRA PIN for individuals or businesses.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 34: Taxpayer Complaint Lodging -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer Complaint Lodging</h3>
+                <p class="text-gray-700 mb-4 text-justify">Lodge a complaint or provide feedback to KRA regarding services, processes, or staff conduct.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 35: Taxpayer Training & Education -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer Training & Education</h3>
+                <p class="text-gray-700 mb-4 text-justify">Access resources and information for taxpayer education and training on various tax topics and compliance.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+
+            <!-- KRA Service 36: Taxpayer e-Services Support -->
+            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200">
+                <h3 class="text-2xl font-bold text-blue-700 mb-3">Taxpayer e-Services Support</h3>
+                <p class="text-gray-700 mb-4 text-justify">Get support for using KRA's e-services portal, including technical assistance and guidance on online processes.</p>
+                <div class="flex flex-wrap gap-3 mt-4">
+                    <a href="https://itax.kra.go.ke/KRA-Portal/" target="_blank" class="flex-1 text-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105">Apply Now</a>
+                    <a href="https://wa.me/254758361830" target="_blank" class="flex-1 text-center px-4 py-2 font-medium rounded-full transition duration-300 ease-in-out transform hover:scale-105 blink-link">Request Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Descriptions -->
+        <section class="mt-16 text-center">
+            <h3 class="text-3xl font-bold text-gray-800 mb-6">Simplifying Your Interactions with KRA</h3>
+            <p class="text-gray-600 leading-relaxed max-w-4xl mx-auto">
+                Our platform is designed to demystify and simplify the process of accessing Kenya Revenue Authority services. From PIN registration and tax returns filing to various tax payments and compliance certificates, we provide clear pathways and direct links to ensure you can complete your tax obligations with minimal effort. We are committed to enhancing transparency and efficiency in tax administration, putting convenience at your fingertips.
+            </p>
+            <p class="text-gray-600 leading-relaxed mt-4 max-w-4xl mx-auto">
+                Should you require any assistance or have questions regarding any KRA service, our "Request Now" option connects you directly with our support team via WhatsApp, ready to guide you through every step. Empowering taxpayers through accessible digital services is our core mission.
+            </p>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-6 shadow-inner rounded-t-lg mt-8">
+        <div class="container mx-auto flex flex-col sm:flex-row justify-center items-center gap-6">
+            <a href="#" id="aboutUsLink" class="text-lg hover:text-blue-200 transition-colors duration-300">About Us</a>
+            <a href="#" id="contactLink" class="text-lg hover:text-blue-200 transition-colors duration-300">Contact</a>
+        </div>
+        <p class="text-center text-sm mt-4 text-blue-200">&copy; 2025 PM E-CITIZEN SERVICES - KRA. All rights reserved.</p>
+    </footer>
+
+    <!-- About Us Modal -->
+    <div id="aboutUsModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="closeModal('aboutUsModal')">&times;</button>
+            <h2 class="text-3xl font-bold text-blue-800 mb-4">About Us</h2>
+            <p class="text-gray-700 leading-relaxed">
+                PM E-CITIZEN SERVICES is dedicated to simplifying access to essential government services for all citizens. Our platform acts as a bridge between you and various government departments, streamlining processes such as ID applications, passport renewals, business registrations, and more. We are committed to enhancing public service delivery through technology, ensuring convenience, transparency, and efficiency in every interaction. Our goal is to empower citizens by providing direct, easy-to-use channels for all their civic needs.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                We believe in a future where government services are readily available and easily navigable for everyone, fostering a more connected and efficient society.
+            </p>
+        </div>
     </div>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close-button" onclick="closeModal('contactModal')">&times;</button>
+            <h2 class="text-3xl font-bold text-blue-800 mb-4">Contact Us</h2>
+            <p class="text-gray-700 leading-relaxed">
+                We're here to help! For any inquiries, support, or feedback, please feel free to reach out to us.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                <strong>Email:</strong> <a href="mailto:shadowkenya254@gmail.com" class="text-blue-600 hover:underline">shadowkenya254@gmail.com</a>
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-2">
+                <strong>WhatsApp Support:</strong> <a href="https://wa.me/254758361830" target="_blank" class="text-blue-600 hover:underline">0758361830</a>
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-4">
+                Our team is available to assist you with any questions regarding our services or the e-citizen portal.
+            </p>
+        </div>
+    </div>
+
+    <!-- JavaScript for Modals -->
+    <script>
+        // Function to open a modal
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        // Function to close a modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        // Event listeners for footer links to open modals
+        document.getElementById('aboutUsLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            openModal('aboutUsModal');
+        });
+
+        document.getElementById('contactLink').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            openModal('contactModal');
+        });
+    </script>
 </body>
 </html>
